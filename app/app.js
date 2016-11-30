@@ -4,6 +4,12 @@ var path = require('path');
 
 app.set("port", 3000);
 
+app.use('/use', function(req, res, next) {
+	console.log(req.method, req.url);
+	next();
+});
+
+//Route the public folder as the root
 app.use(express.static(path.join(__dirname, "public")));
 
 app.get("/json", function(req, res) {
