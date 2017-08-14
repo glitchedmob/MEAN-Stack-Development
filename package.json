@@ -1,0 +1,26 @@
+{
+  "name": "mean-stack-development",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/glitchedmob/MEAN-Stack-Development.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/glitchedmob/MEAN-Stack-Development/issues"
+  },
+  "homepage": "https://github.com/glitchedmob/MEAN-Stack-Development#readme",
+  "dependencies": {
+    "express": "^4.15.4"
+  },
+  "devDependencies": {
+    "mocha": "^3.5.0"
+  }
+}
