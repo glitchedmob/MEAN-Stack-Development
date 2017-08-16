@@ -4,20 +4,11 @@ const app = express();
 
 app.set('port', 3000);
 
-
-app.get('/', (req, res) => {
-	res.status(200)
-		.sendFile(path.join(__dirname, 'public', 'index.html'));
-});
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/json', (req, res) => {
 	res.status(200)
 		.json({jsonData: true});
-});
-
-app.get('/html', (req, res) => {
-	res.status(200)
-		.sendFile(path.join(__dirname, 'public/index.html'));
 });
 
 const server = app.listen(app.get('port'), () => {
