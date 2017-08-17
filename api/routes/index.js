@@ -5,6 +5,10 @@ const ctrlHotels = require('../controllers/hotels.controller.js');
 
 router
 	.route('/hotels')
-	.get(ctrlHotels.hotelsGetAll);
+	.get(ctrlHotels.getAllHotels);
+
+router
+	.route('/hotels/:hotelId')
+	.get(ctrlHotels.getHotel);
 
 module.exports = router;
