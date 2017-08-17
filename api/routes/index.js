@@ -5,10 +5,14 @@ const ctrlHotels = require('../controllers/hotels.controller.js');
 
 router
 	.route('/hotels')
-	.get(ctrlHotels.getAllHotels);
+	.get(ctrlHotels.index);
 
 router
 	.route('/hotels/:hotelId')
-	.get(ctrlHotels.getHotel);
+	.get(ctrlHotels.show);
+
+router
+	.route('/hotels/create')
+	.post(ctrlHotels.create)
 
 module.exports = router;
