@@ -18,7 +18,7 @@ function open() {
 		}
 
 		connection = db;
-		console.log('DB connection saved successfuly', db); 
+		console.log('DB connection saved successfuly'); 
 	});
 }
 
