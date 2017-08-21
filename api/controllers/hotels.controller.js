@@ -1,6 +1,11 @@
 const hotelData = require('../data/hotel-data.json');
+const dbconn = require('../data/dbconnection.js');
 
 module.exports.index = (req, res) => {
+	const db = dbconn.get();
+	const collection = db.collection('hotels');
+	const docs = collection.find();
+	
 	console.log("GET the hotels");
 
 	const offset = req.query && req.query.offset ? parseInt(req.query.offset) : 0;
@@ -15,6 +20,7 @@ module.exports.index = (req, res) => {
 }
 
 module.exports.show = (req, res) => {
+	const db = dbconn.get();
 	const hotelId = req.params.hotelId;
 	const hotel = hotelData[hotelId];
 
@@ -25,6 +31,7 @@ module.exports.show = (req, res) => {
 }
 
 module.exports.create = (req, res) => {
+	const db = dbconn.get();
 	console.log("Post new hotel");
 	console.log(req.body);
 	

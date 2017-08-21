@@ -13,10 +13,12 @@ function open() {
 	MongoClient.connect(dburl, (err, db) => {
 		if(err) {
 			console.log(`Unable to connect to ${dburl}`);
+			console.log(err);
 			return;
 		}
 
-		connection = 
+		connection = db;
+		console.log('DB connection saved successfuly', db); 
 	});
 }
 
