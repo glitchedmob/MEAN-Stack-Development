@@ -12,7 +12,7 @@ router
 	.get(ctrlHotels.show);
 
 router
-	.route('/hotels/create')
+	.route('/hotels')
 	.post(ctrlHotels.create)
 
 module.exports = router;

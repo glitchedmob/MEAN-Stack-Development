@@ -40,11 +40,32 @@ module.exports.show = (req, res) => {
 
 module.exports.create = (req, res) => {
 	const db = dbconn.get();
-	console.log("Post new hotel");
-	console.log(req.body);
+	const collection = db.collection('hotels');
+	let newHotel;
+
+	console.log("POST new hotel");
+
+	if(req.body && req.body.name && req.body.stars) {
+		newHotel = req.body;
+		newHotel.stars = parseInt(req.body.stars);
+
+		collection.insertOne(newHotel, (err, response) => {
+			console.log(response.ops);
+			res
+				.status(201)
+				.json(response.ops);
+
+		});
+
+	} else {
+		console.log("Data missing from body");
+
+		res
+			.status(400)
+			.json({message: "Required data missing from body"});
+
+	}
+
 	
-	res
-		.status(200)
-		.json(req.body);
 }
 
