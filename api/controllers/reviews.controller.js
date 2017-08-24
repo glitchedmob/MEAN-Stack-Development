@@ -8,10 +8,19 @@ module.exports.index = (req, res) => {
 		.findById(hotelId)
 		.select('reviews')
 		.exec((err, hotel) => {
-			console.log(`Found hotel with id: ${hotelId}`);
+			const response = {
+				status: 200,
+				message: results
+			}
+
+			if(err) {
+				response.status = 400;
+				response.message = err;
+			}
+
 			res
-				.status(200)
-				.json(hotel.reviews);
+				.status(response.status)
+				.json(response.message);
 		});	
 }
 
@@ -23,10 +32,20 @@ module.exports.show = (req, res) => {
 	.findById(hotelId)
 	.select('reviews')
 	.exec((err, hotel) => {
+		const response = {
+			status: 200,
+			message: results
+		}
+
+		if(err) {
+			response.status = 400;
+			response.message = err;
+		}
+
 		const review = hotel.reviews.id(reviewId);
 		console.log(`Found review with id: ${reviewId}`);
 		res
-			.status(200)
-			.json(review);
+			.status(response.status)
+			.json(response.message);
 	});	
 }

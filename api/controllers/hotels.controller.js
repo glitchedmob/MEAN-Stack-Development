@@ -6,6 +6,13 @@ function runGeoQuery(req, res) {
 	const lng = parseFloat(req.query.lng);
 	const lat = parseFloat(req.query.lat);
 
+	if(isNaN(lng) | isNaN(lat)) {
+		res
+			.status(400)
+			.json({ "message": "Latitude and Longitude must both be numbers"});
+		return;
+	}
+
 	const point = {
 		type: "Point",
 		coordinates: [lng, lat]
@@ -22,9 +29,19 @@ function runGeoQuery(req, res) {
 			console.log(`Geo results ${results}`);
 			console.log(`Geo stats ${stats}`);
 
+			const response = {
+				status: 200,
+				message: results
+			}
+
+			if(err) {
+				response.status = 400;
+				response.message = err;
+			}
+
 			res
-				.status(200)
-				.json(results);
+				.status(response.status)
+				.json(response.message);
 		});
 }
 
