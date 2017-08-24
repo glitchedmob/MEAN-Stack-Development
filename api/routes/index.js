@@ -18,8 +18,8 @@ router
 	.route('/hotels')
 	.post(ctrlHotels.create);
 
-// Review routes
 
+// Review routes
 router
 	.route('/hotels/:hotelId/reviews')
 	.get(ctrlReviews.index);

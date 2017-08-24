@@ -4,15 +4,15 @@ const Hotel = mongoose.model('Hotel');
 module.exports.index = (req, res) => {
 	const hotelId = req.params.hotelId;
 	
-		Hotel
-			.findById(hotelId)
-			.select('reviews')
-			.exec((err, hotel) => {
-				console.log(`Found hotel with id: ${hotelId}`);
-				res
-					.status(200)
-					.json(hotel.reviews);
-			});	
+	Hotel
+		.findById(hotelId)
+		.select('reviews')
+		.exec((err, hotel) => {
+			console.log(`Found hotel with id: ${hotelId}`);
+			res
+				.status(200)
+				.json(hotel.reviews);
+		});	
 }
 
 module.exports.show = (req, res) => {
