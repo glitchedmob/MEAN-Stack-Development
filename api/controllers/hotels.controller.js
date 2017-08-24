@@ -32,9 +32,28 @@ module.exports.index = (req, res) => {
 
 	const offset = req.query && req.query.offset ? parseInt(req.query.offset) : 0;
 	const count = req.query && req.query.count ? parseInt(req.query.count) : 5;
+	const maxCount = 10;
 
 	if(req.query && req.query.lat && req.query.lng) {
 		runGeoQuery(req, res);
+		return;
+	}
+
+	if(isNaN(offset) || isNaN(count)) {
+		res
+			.status(400)
+			.json({
+				"message": "Both count and offset must be numbers"
+			});
+		return;
+	}
+
+	if(count > maxCount) {
+		res
+			.status(400)
+			.json({
+				"message": `Count limit of ${maxCount} exceeded`
+			});
 		return;
 	}
 
@@ -43,10 +62,16 @@ module.exports.index = (req, res) => {
 		.skip(offset)
 		.limit(count)
 		.exec((err, hotels) => {
-			console.log(`Found ${hotels.length} hotels`);
-			res
-				.status(200)
-				.json(hotels);
+			if(err) {
+				res
+					.status(500)
+					.json(err);
+			} else {
+				console.log(`Found ${hotels.length} hotels`);
+				res
+					.status(200)
+					.json(hotels);
+			}
 		});
 }
 
@@ -57,10 +82,22 @@ module.exports.show = (req, res) => {
 	Hotel
 		.findById(hotelId)
 		.exec((err, hotel) => {
-			console.log(`Found hotel with id: ${hotelId}`);
+			const response = {
+				status: 200,
+				message: hotel
+			}
+
+			if(err) {
+				response.status = 500;
+				response.message = err;
+			} else if(!hotel) {
+				response.status = 404;
+				response.message = { "message": "Hotel ID not found" };
+			}
+
 			res
-				.status(200)
-				.json(hotel);
+				.status(response.status)
+				.json(response.message);
 		});
 }
 
