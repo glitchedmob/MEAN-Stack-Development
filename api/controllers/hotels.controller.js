@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Hotel = mongoose.model('Hotel');
+const helpers = require('./helpers');
 
 
 function runGeoQuery(req, res) {
@@ -119,31 +120,27 @@ module.exports.show = (req, res) => {
 }
 
 module.exports.create = (req, res) => {
-	const db = dbconn.get();
-	const collection = db.collection('hotels');
-	let newHotel;
+	
 
-	console.log("POST new hotel");
-
-	if(req.body && req.body.name && req.body.stars) {
-		newHotel = req.body;
-		newHotel.stars = parseInt(req.body.stars);
-
-		collection.insertOne(newHotel, (err, response) => {
-			console.log(response.ops);
+	Hotel
+		.create({
+			name: req.body.name,
+			description: req.body.description,
+			stars: parseInt(req.body.stars, 10),
+			services: helpers.splitArray(req.body.services, ';'),
+			photos: helpers.splitArray(req.body.photos, ';'),
+			currency: req.body.currency,
+			location: {
+				address: req.body.address,
+				coordinates: [
+					parseFloat(req.body.lng),
+					parseFloat(req.body.lat)
+				]
+			}
+		}, (err, hotel) => {
 			res
-				.status(201)
-				.json(response.ops);
-
+				.status(!err ? 201: 400)
+				.json(!err ? hotel: err);
 		});
-
-	} else {
-		console.log("Data missing from body");
-
-		res
-			.status(400)
-			.json({message: "Required data missing from body"});
-
-	}	
 }
 

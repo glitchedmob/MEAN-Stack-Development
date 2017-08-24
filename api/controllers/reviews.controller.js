@@ -10,12 +10,15 @@ module.exports.index = (req, res) => {
 		.exec((err, hotel) => {
 			const response = {
 				status: 200,
-				message: results
+				message: hotel
 			}
 
 			if(err) {
 				response.status = 400;
 				response.message = err;
+			} else if (!hotel) {
+				response.status = 404;
+				response.message = { "message": `Hotel with id ${hotelId} not found`}
 			}
 
 			res
@@ -34,7 +37,7 @@ module.exports.show = (req, res) => {
 	.exec((err, hotel) => {
 		const response = {
 			status: 200,
-			message: results
+			message: hotel
 		}
 
 		if(err) {
@@ -42,10 +45,61 @@ module.exports.show = (req, res) => {
 			response.message = err;
 		}
 
-		const review = hotel.reviews.id(reviewId);
+		response.message = hotel.reviews.id(reviewId);
 		console.log(`Found review with id: ${reviewId}`);
 		res
 			.status(response.status)
 			.json(response.message);
 	});	
+}
+
+function addReview(req, res, hotel) {
+	hotel.reviews.push({
+		name: req.body.name,
+		rating: parseInt(req.body.rating, 10),
+		review: req.body.review
+	});
+
+	hotel
+		.save((err, updatedHotel) => {
+			if(err) {
+				res
+					.status(500)
+					.json(err);
+			} else {
+				res
+					.status(201)
+					.json(updatedHotel.reviews[updatedHotel.reviews.length - 1]);
+			}
+		});
+}
+
+module.exports.create = (req, res) => {
+	const hotelId = req.params.hotelId;
+	
+	Hotel
+		.findById(hotelId)
+		.select('reviews')
+		.exec((err, hotel) => {
+			const response = {
+				status: 200,
+				message: hotel
+			}
+
+			if(err) {
+				response.status = 400;
+				response.message = err;
+			} else if (!hotel) {
+				response.status = 404;
+				response.message = { "message": `Hotel with id ${hotelId} not found`}
+			}
+
+			if(hotel) {
+				addReview(req, res, hotel)
+			} else {
+				res
+				.status(response.status)
+				.json(response.message);
+			}
+		});	
 }
