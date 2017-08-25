@@ -9,17 +9,19 @@ const ctrlReviews = require('../controllers/reviews.controller.js');
 router
 	.route('/hotels')
 	.get(ctrlHotels.index)
-	.post(ctrlHotels.create);;
+	.post(ctrlHotels.create);
 
 router
 	.route('/hotels/:hotelId')
-	.get(ctrlHotels.show);
+	.get(ctrlHotels.show)
+	.put(ctrlHotels.update);
 
 // Review routes
 router
 	.route('/hotels/:hotelId/reviews')
 	.get(ctrlReviews.index)
-	.post(ctrlReviews.create);
+	.post(ctrlReviews.create)
+	.put(ctrlReviews.update);
 
 router
 	.route('/hotels/:hotelId/reviews/:reviewId')

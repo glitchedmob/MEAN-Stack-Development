@@ -103,3 +103,34 @@ module.exports.create = (req, res) => {
 			}
 		});	
 }
+
+module.exports.update = (req, res) => {
+	const hotelId = req.params.hotelId;
+	
+	Hotel
+		.findById(hotelId)
+		.select('-reviews -rooms')
+		.exec((err, hotel) => {
+			const response = {
+				status: 200,
+				message: hotel
+			}
+
+			if(err) {
+				response.status = 400;
+				response.message = err;
+			} else if (!hotel) {
+				response.status = 404;
+				response.message = { "message": `Hotel with id ${hotelId} not found`}
+			}
+
+			if (response.status !== 200) {
+				res
+					.status(response.status)
+					.json(response.message);
+			} else {
+				
+			}
+
+		});	
+}

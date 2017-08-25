@@ -144,3 +144,57 @@ module.exports.create = (req, res) => {
 		});
 }
 
+module.exports.update = (req, res) => {
+	const hotelId = req.params.hotelId;
+	
+	Hotel
+		.findById(hotelId)
+		.select('-reviews -rooms')
+		.exec((err, hotel) => {
+			const response = {
+				status: 200,
+				message: hotel
+			}
+
+			if(err) {
+				response.status = 400;
+				response.message = err;
+			} else if (!hotel) {
+				response.status = 404;
+				response.message = { "message": `Hotel with id ${hotelId} not found`}
+			}
+
+			if (response.status !== 200) {
+				res
+					.status(response.status)
+					.json(response.message);
+			} else {
+				hotel.name = req.body.name;
+				hotel.description = req.body.description;
+				hotel.stars = parseInt(req.body.stars, 10);
+				hotel.services = helpers.splitArray(req.body.services, ';');
+				hotel.photos = helpers.splitArray(req.body.photos, ';');
+				hotel.currency = req.body.currency;
+				hotel.location = {
+					address: req.body.address,
+					coordinates: [
+						parseFloat(req.body.lng),
+						parseFloat(req.body.lat)
+					]
+				}
+
+
+				hotel.save((err, updatedHotel) => {
+					if(err) {
+						res
+							.status(500)
+							.json(err);
+					} else {
+						res
+							.status(204)
+							.json();
+					}
+				});
+			}
+		});
+}
