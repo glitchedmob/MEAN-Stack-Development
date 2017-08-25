@@ -106,22 +106,31 @@ module.exports.create = (req, res) => {
 
 module.exports.update = (req, res) => {
 	const hotelId = req.params.hotelId;
+	const reviewId = req.params.reviewId;
 	
 	Hotel
 		.findById(hotelId)
-		.select('-reviews -rooms')
+		.select('reviews')
 		.exec((err, hotel) => {
+			let thisReview;
 			const response = {
 				status: 200,
 				message: hotel
 			}
 
 			if(err) {
-				response.status = 400;
+				response.status = 500;
 				response.message = err;
 			} else if (!hotel) {
 				response.status = 404;
 				response.message = { "message": `Hotel with id ${hotelId} not found`}
+			} else {
+				thisReview = hotel.reviews.id(reviewId);
+
+				if(!thisReview) {
+					respons.status = 404;
+					response.message = { "message": `Review with id: ${reviewId} not found`};
+				}
 			}
 
 			if (response.status !== 200) {
@@ -129,7 +138,73 @@ module.exports.update = (req, res) => {
 					.status(response.status)
 					.json(response.message);
 			} else {
+				thisReview.name = req.body.name;
+        thisReview.rating = parseInt(req.body.rating, 10);
+				thisReview.review = req.body.review;
 				
+				hotel.save((err, updatedHotel) => {
+					if(err) {
+						res
+							.status(500)
+							.json(err);
+					} else {
+						res
+							.status(204)
+							.json()
+					}
+				});
+			}
+
+		});	
+}
+
+module.exports.delete = (req, res) => {
+	const hotelId = req.params.hotelId;
+	const reviewId = req.params.reviewId;
+	
+	Hotel
+		.findById(hotelId)
+		.select('reviews')
+		.exec((err, hotel) => {
+			let thisReview;
+			const response = {
+				status: 200,
+				message: hotel
+			}
+
+			if(err) {
+				response.status = 500;
+				response.message = err;
+			} else if (!hotel) {
+				response.status = 404;
+				response.message = { "message": `Hotel with id ${hotelId} not found`}
+			} else {
+				thisReview = hotel.reviews.id(reviewId);
+
+				if(!thisReview) {
+					respons.status = 404;
+					response.message = { "message": `Review with id: ${reviewId} not found`};
+				}
+			}
+
+			if (response.status !== 200) {
+				res
+					.status(response.status)
+					.json(response.message);
+			} else {
+				thisReview.remove();
+				
+				hotel.save((err, updatedHotel) => {
+					if(err) {
+						res
+							.status(500)
+							.json(err);
+					} else {
+						res
+							.status(204)
+							.json()
+					}
+				});
 			}
 
 		});	

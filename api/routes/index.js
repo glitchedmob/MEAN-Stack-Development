@@ -14,17 +14,19 @@ router
 router
 	.route('/hotels/:hotelId')
 	.get(ctrlHotels.show)
-	.put(ctrlHotels.update);
+	.put(ctrlHotels.update)
+	.delete(ctrlHotels.delete);
 
 // Review routes
 router
 	.route('/hotels/:hotelId/reviews')
 	.get(ctrlReviews.index)
-	.post(ctrlReviews.create)
-	.put(ctrlReviews.update);
+	.post(ctrlReviews.create);
 
 router
 	.route('/hotels/:hotelId/reviews/:reviewId')
-	.get(ctrlReviews.show);
+	.get(ctrlReviews.show)
+	.put(ctrlReviews.update)
+	.delete(ctrlReviews.delete);
 
 module.exports = router;

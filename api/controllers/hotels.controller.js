@@ -198,3 +198,21 @@ module.exports.update = (req, res) => {
 			}
 		});
 }
+
+module.exports.delete = (req, res) => {
+	const hotelId = req.params.hotelId;
+	
+	Hotel
+		.findByIdAndRemove(hotelId)
+		.exec((err, hotel) => {
+			if(err) {
+				res
+					.status(404)
+					.json(err);
+			} else {
+				res
+					.status(204)
+					.json();
+			}
+		});
+}
