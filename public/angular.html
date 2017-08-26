@@ -8,11 +8,8 @@
 </head>
 <body>
 
-	<div ng-init="number = 0">
-		<button ng-click="number = number + 1">+1</button>
-		<button ng-click="number = number - 1">-1</button>
-		<p>{{ number }}</p>
-	</div>
+	<p>Show me the paragraph <input type="checkbox" ng-model="isChecked"></p>
+	<p ng-show="isChecked">Secret message</p>
 
 
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.0/angular.min.js"></script>
