@@ -8,9 +8,11 @@
 </head>
 <body>
 
-	<p>Show me the paragraph <input type="checkbox" ng-model="isChecked"></p>
-	<p ng-show="isChecked">Secret message</p>
-
+	<div ng-init="number = 19">
+		<input type="text" ng-model="guess">
+		<p ng-hide="guess != number">Correct</p>
+		<p ng-show="guess != number">Incorrect</p>
+	</div>
 
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.0/angular.min.js"></script>
 	<script src="js/app.js"></script>
