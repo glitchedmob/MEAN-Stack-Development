@@ -17,9 +17,9 @@
 </head>
 <body>
 
-	<div ng-init="numbers = [0, 1, 2, 3, 4, 5, 6, 7]">
+	<div ng-init="names = [{ surname: 'Smith', firstname: 'Joe' }, {surname: 'Smith', firstname: 'Sue'}]">
 		<ul>
-			<li ng-repeat="number in numbers" ng-class="{red: $even, odd: $odd}">{{ number }}</li>
+			<li ng-repeat="name in names track by $index">{{ name.surname }}, {{ name.firstname}}</li>
 		</ul>
 	</div>
 
