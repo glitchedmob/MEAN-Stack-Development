@@ -17,10 +17,14 @@
 </head>
 <body>
 
-	<div ng-init="names = [{ surname: 'Smith', firstname: 'Joe' }, {surname: 'Smith', firstname: 'Sue'}]">
-		<ul>
-			<li ng-repeat="name in names track by $index">{{ name.surname }}, {{ name.firstname}}</li>
-		</ul>
+	<div ng-init="rebels = [
+		{ name: 'Luke Skywalker', profession: 'Jedi', weapon: 'lightsaber', age: 19 },
+		{ name: 'Ben Kenobi', profession: 'Jedi', weapon: 'lightsaber', age: 56 },
+		{ name: 'Han Solo', profession: 'smuggler', weapon: 'laser blaseter', age: 32 },
+		{ name: 'Chewbacca', profession: 'pilot', weapon: 'bowcaster', age: 200 }
+	]">
+		<select ng-model="rebel" ng-options="rebel.name group by rebel.weapon for rebel in rebels"></select>
+		<p>You have selected: {{ rebel.name }} ({{ rebel.profession }})</p>
 	</div>
 
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.0/angular.min.js"></script>
