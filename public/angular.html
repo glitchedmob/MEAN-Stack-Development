@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app>
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,12 +8,13 @@
 </head>
 <body>
 
-	<div ng-app>
-		<p>Hello, {{ user }}</p>
-		<input type="text" ng-model="user">
+	<div ng-init="number = 0">
+		<button ng-click="number = number + 1">+1</button>
+		<button ng-click="number = number - 1">-1</button>
+		<p>{{ number }}</p>
 	</div>
 
-	
+
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.0/angular.min.js"></script>
 	<script src="js/app.js"></script>
 </body>
