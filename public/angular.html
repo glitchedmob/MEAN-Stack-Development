@@ -9,14 +9,12 @@
 </head>
 <body>
 
-	<div ng-controller="MyController as first">
-		<div ng-controller="SecondController as last">
-			{{ first.name }}, {{ last.name }}
-		</div>
+	<div ng-controller="MyController as myCtrl">
+		{{ myCtrl.name }}
 	</div>
-
 
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.0/angular.min.js"></script>
 	<script src="js/app.js"></script>
+	<script src="js/controller.js"></script>
 </body>
 </html>
