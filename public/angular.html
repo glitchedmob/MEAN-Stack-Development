@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" ng-app>
+<html lang="en" ng-app="myApp">
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,52 +9,12 @@
 </head>
 <body>
 
-	<div ng-init="number = 1250.50">
-		<p>{{ number | currency}}</p>
+	<div ng-controller="MyController">
+		<h4>{{ number }}</h4>
+		<button ng-click="increment(2)">+1</button>
+		<button ng-click="decrement(3)">-1</button>
 	</div>
 
-	<div ng-init="number = 1250.502454">
-		<p>{{ -number | number:"4"}}</p>
-	</div>
-
-	<div ng-init="string = 'star wars'">
-		<p>{{ string | uppercase }}</p>
-	</div>
-
-	<div ng-init="myDate = 1503792097400">
-		<p>{{ myDate | date }}</p>
-	</div>
-
-	<div ng-init="myDate = 1503792097400">
-		<p>{{ myDate | date: "medium" }}</p>
-	</div>
-
-	<div ng-init="myDate = 1503792097400">
-		<p>{{ myDate | date: "yyyy - mm - dd (M:H:s)" }}</p>
-	</div>
-
-	<div ng-init="myArray = [0, 1, 2, 3, 4, 5, 6]">
-		<p>{{ myArray | limitTo: 4 }}</p>
-	</div>
-
-	<div ng-init="rebels = [
-		{ name: 'Luke Skywalker', profession: 'Jedi', weapon: 'lightsaber', age: 19 },
-		{ name: 'Ben Kenobi', profession: 'Jedi', weapon: 'lightsaber', age: 56 },
-		{ name: 'Han Solo', profession: 'smuggler', weapon: 'laser blaseter', age: 32 },
-		{ name: 'Chewbacca', profession: 'pilot', weapon: 'bowcaster', age: 200 }
-	]">
-		<ul>
-			<li ng-repeat="rebel in rebels | orderBy: 'name'">{{ rebel.name }} (age: {{ rebel.age }}) is a {{ rebel.profession }} fighting with a {{ rebel.weapon }}</li>
-		</ul>
-		<ul>
-			<li ng-repeat="rebel in rebels | orderBy: ['profession', '-age']">{{ rebel.name }} (age: {{ rebel.age }}) is a {{ rebel.profession }} fighting with a {{ rebel.weapon }}</li>
-		</ul>
-		Weapon: <input type="text" ng-model="search.weapon">
-		Text search: <input type="text" ng-model="search.$">
-		<ul>
-			<li ng-repeat="rebel in rebels | filter: search">{{ rebel.name }} (age: {{ rebel.age }}) is a {{ rebel.profession }} fighting with a {{ rebel.weapon }}</li>
-		</ul>
-	</div>
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.0/angular.min.js"></script>
 	<script src="js/app.js"></script>
 </body>
