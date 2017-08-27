@@ -1,9 +1,13 @@
 angular.module('myApp')
-	.controller('MyController', MyController)
+	.controller('MainController', MainController)
 	.controller('AboutController', AboutController);
 
-function MyController() {
+function MainController($http) {
 	const vm = this;
+	$http.get('http://swapi-tpiros.rhcloud.com/films')
+		.then((response) => {
+			vm.films = response.data;
+		});
 	vm.name = 'Levi';
 }
 

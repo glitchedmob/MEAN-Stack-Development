@@ -3,7 +3,7 @@ angular.module('myApp', ['ngRoute']).config(config);
 function config($routeProvider) {
 	$routeProvider.when('/',  {
 		templateUrl: 'templates/main.html',
-		controller: 'MyController',
+		controller: 'MainController',
 		controllerAs: 'vm'
 	})
 	.when('/about', {
