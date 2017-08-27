@@ -9,9 +9,9 @@
 </head>
 <body>
 
-	<div ng-controller="MyController">
-		<div ng-controller="SecondController">
-			{{ name }}
+	<div ng-controller="MyController as first">
+		<div ng-controller="SecondController as last">
+			{{ first.name }}, {{ last.name }}
 		</div>
 	</div>
 
